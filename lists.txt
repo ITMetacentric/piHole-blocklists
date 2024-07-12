@@ -17,5 +17,5 @@ https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/blocklist
 https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/blocklists/tracking.txt	
 https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/blocklists/twitter.txt	
 https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/blocklists/vaping.txt	
-https://nsfw.oisd.nl	
-https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts	
+https://nsfw.oisd.nl
+https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-social/hosts
