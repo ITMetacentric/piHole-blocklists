@@ -1,7 +1,19 @@
-import os, mimetypes
+import os, mimetypes, urllib, tqdm
+import urllib.request
 dir = os.getcwd()
 
 dns_entries = []
+
+# collect the oisd_big_abp list
+for line in urllib.request.urlopen('https://nsfw.oisd.nl'):
+    dns_entries.append(line.decode('utf-8'))
+print(dns_entries)
+print('Big list collected')
+
+# collect the oisd_nsfw_abp list
+for line in urllib.request.urlopen('https://nsfw.oisd.nl'):
+    dns_entries.append(line.decode('utf-8'))
+print('NSFW List collected')
 
 # Collect contents of every file found
 for root, dirs, files in os.walk(dir):
@@ -14,8 +26,12 @@ for root, dirs, files in os.walk(dir):
                 f.close()
             dns_entries.append(file_contents)
 
-# Removing duplicates by converting to dictionary and back again
-dns_entries = list(dict.fromkeys(dns_entries)) # converts to dict and then back to list but deduplicated
+# uses list comprehension to remove duplicates from the list
+
+dns_entries_dedup = []
+for x in tqdm.tqdm(dns_entries):
+    if x not in dns_entries_dedup:
+        dns_entries_dedup.append(x)
 
 # Creating file
 with open(os.path.join(dir, 'dedup-list.txt'), 'w') as f:
