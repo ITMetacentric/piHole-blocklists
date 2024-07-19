@@ -1,8 +1,19 @@
-import os, mimetypes, urllib, tqdm
+import os, mimetypes, urllib
 import urllib.request
+import pandas as pd
+from tqdm import tqdm 
 dir = os.getcwd()
 
 dns_entries = []
+dns_entries_dedup = []
+tqdm.pandas()
+
+# Deduplicate and per new file
+def dedup(raw_list):
+    print("Deduplicating...")
+    df = pd.DataFrame({'col': raw_list})
+    df.drop_duplicates(inplace = True)
+    dns_entries_dedup = df['col'].tolist()
 
 # collect the oisd_big_abp list
 for line in urllib.request.urlopen('https://nsfw.oisd.nl'):
@@ -23,16 +34,9 @@ for root, dirs, files in os.walk(dir):
                 file_contents = f.readlines()
                 f.close()
             dns_entries.append(file_contents)
-
-# uses list comprehension to remove duplicates from the list
-print(f'[INFO]: Total Domains: {len(dns_entries)}')
-print("Deduplication commencing...")
-dns_entries_dedup = []
-for x in tqdm.tqdm(dns_entries):
-    if x not in dns_entries_dedup:
-        dns_entries_dedup.append(x)
         
-print(f'[INFO]: Deduplicated Domains: {len(dns_entries_dedup)}')
+# uses list comprehension to remove duplicates from the list
+print(f'[INFO]: Total Domains: {len(dns_entries_dedup)}')
 
 # Creating file
 print("Writing out dedup-list.txt")
