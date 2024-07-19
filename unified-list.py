@@ -5,15 +5,16 @@ from tqdm import tqdm
 dir = os.getcwd()
 
 dns_entries = []
-dns_entries_dedup = []
 tqdm.pandas()
 
 # Deduplicate and per new file
 def dedup(raw_list):
+    dns_entries_dedup = []
     print("Deduplicating...")
     df = pd.DataFrame({'col': raw_list})
     df.drop_duplicates(inplace = True)
     dns_entries_dedup = df['col'].tolist()
+    return dns_entries_dedup
 
 # collect the oisd_big_abp list
 for line in urllib.request.urlopen('https://nsfw.oisd.nl'):
@@ -36,6 +37,8 @@ for root, dirs, files in os.walk(dir):
             dns_entries.append(file_contents)
         
 # uses list comprehension to remove duplicates from the list
+dns_entries_dedup = dedup(dns_entries)
+
 print(f'[INFO]: Total Domains: {len(dns_entries_dedup)}')
 
 # Creating file
