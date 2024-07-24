@@ -7,12 +7,10 @@ dir = os.getcwd()
 dns_entries = []
 tqdm.pandas()
 
-def split_list(list, chunk_size):
-    chunks = []
+def split_list(list, num_of_lists):
+    chunk_size = int(len(list)/num_of_lists)
     for i in range(0, len(list), chunk_size):
-        chunk = list[i:i + chunk_size]
-        chunks.append(chunk)
-    return chunks
+        yield list[i:i + chunk_size]
 
 # Deduplicate and per new file
 def dedup(raw_list):
@@ -41,18 +39,20 @@ for root, dirs, files in os.walk(dir):
             with open(file_path, 'r') as f:
                 file_contents = f.readlines()
                 f.close()
-            dns_entries.append(file_contents)
+            print(type(file_contents))
+            for i in file_contents:
+                dns_entries.append(i)
         
 # uses list comprehension to remove duplicates from the list
 dns_entries_dedup = dedup(dns_entries)
-
 print(f'[INFO]: Total Domains: {len(dns_entries_dedup)}')
-chunk_size = round(len(dns_entries_dedup)/5)
-files = split_list(dns_entries_dedup, chunk_size)
+
+files = list(split_list(dns_entries_dedup, 5))
 # Creating file
 for i in files:
     num = files.index(i)
+    print(len(i))
+    print(type(i))
     print(f"Writing out dedup-list-{num}.txt")
     with open(os.path.join(dir, f'dedup-list{num}.txt'), 'w') as f:
-        for l in tqdm(i):
-            f.writelines(l)
+        f.writelines(i)
