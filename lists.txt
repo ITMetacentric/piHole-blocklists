@@ -1,3 +1,7 @@
-https://nsfw.oisd.nl
-https://big.oisd.nl
 https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-social/hosts
+https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/dedup-list0.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/dedup-list1.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/dedup-list2.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/dedup-list3.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/dedup-list4.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/dedup-list5.txt
