@@ -39,7 +39,7 @@ for root, dirs, files in os.walk(dir):
             with open(file_path, 'r') as f:
                 file_contents = f.readlines()
                 f.close()
-            print(type(file_contents))
+            # print(type(file_contents))
             for i in file_contents:
                 dns_entries.append(i)
         
@@ -51,8 +51,8 @@ files = list(split_list(dns_entries_dedup, 5))
 # Creating file
 for i in files:
     num = files.index(i)
-    print(len(i))
-    print(type(i))
+    # print(len(i))
+    # print(type(i))
     print(f"Writing out dedup-list-{num}.txt")
-    with open(os.path.join(dir, f'dedup-list{num}.txt'), 'w') as f:
+    with open(os.path.join(dir, "bin", f'dedup-list{num}.txt'), 'w') as f:
         f.writelines(i)
