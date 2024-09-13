@@ -81,6 +81,12 @@ update()
         wait 
         cd .. || exit
     done
+    echo collecting external large lists
+    cd "$LIST" || exit
+    curl -L https://nsfw.oisd.nl -o nfsw.txt
+    wait
+    curl -L https://big.oisd.nl -o big.txt
+    wait
 }
 
 all()

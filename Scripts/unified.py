@@ -21,7 +21,7 @@ def dedup(raw_list):
 
 def main(root_dir, blocklist):
     # collect the oisd_big_abp list
-    for line in urllib.request.urlopen('https://nsfw.oisd.nl'):
+    for line in urllib.request.urlopen('https://big.oisd.nl'):
         dns_entries.append(line.decode('utf-8'))
     print('Big list collected')
 
