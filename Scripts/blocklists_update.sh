@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ROOTDIR=/home/isaac/blocklists
-PIHOLE=$ROOTDIR/piHole-blocklists
+PIHOLE=$ROOTDIR/piHole
 LIST=/home/isaac/blocklists/Lists
 YOUTUBE=/home/isaac/blocklists/youTube_ads_4_pi-hole
 
@@ -59,6 +59,7 @@ create( )
 
 update()
 {
+    cd "$ROOTDIR" || exit
     for dir in "${DIRECTORIES[@]}";
     do 
         if [ ! -d "$dir" ]; then
