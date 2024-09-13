@@ -1,7 +1,7 @@
 import os
 
 # WARNING!: Don't change these. These are the project dependent paths which ensure that the scripts reach the correct directories. 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BIN_PATH = os.path.join(ROOT_DIR, 'bin')
 BLOCK_LIST_PATH = os.path.join(ROOT_DIR, 'Lists', 'blocklists')
 
