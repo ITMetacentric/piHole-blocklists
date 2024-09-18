@@ -1,8 +1,6 @@
 abuse.txt
 ads.txt
 basic.txt
-blocklist-vpn.txt
-crowed_list.txt
 crypto.txt
 drugs.txt
 fortnite.txt

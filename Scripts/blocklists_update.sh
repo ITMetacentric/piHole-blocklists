@@ -49,8 +49,6 @@ create ()
     cp "$YOUTUBE/crowed_list.txt" "$PIHOLE/Lists"
     for file in "${files[@]}";
     do
-        src="$LIST/$file"
-        echo "$src"
         cp "$LIST/$file" "$PIHOLE/Lists"
         wait
     done
