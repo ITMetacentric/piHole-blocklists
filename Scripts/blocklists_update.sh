@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ROOTDIR=/home/isaac/blocklists
-PIHOLE=$ROOTDIR/piHole_blocklist
+PIHOLE=$ROOTDIR/piHole_blocklists
 LIST=/home/isaac/blocklists/Lists
 YOUTUBE=/home/isaac/blocklists/youTube_ads_4_pi-hole
 DIRECTORIES=("$LIST" "$YOUTUBE")
@@ -15,8 +15,9 @@ help()
     echo
     echo "h     Print this Help."
     echo "u     Clone and/or update the forks"
-    echo "c     Create the unified lists, takes file for lists as argument"
-    echo "g     Get the required repositories for the first time"
+    echo "c     [USAGE]: -c include.txt."
+    echo "       Create the unified lists, takes file for lists as argument."
+    echo "g     Get the required repositories for the first time. Ignore any errors which may occur. These are just directories already existing"
     echo 
 }
 
@@ -80,6 +81,7 @@ update()
     cd "$ROOTDIR" || exit
     for dir in "${DIRECTORIES[@]}";
     do 
+        echo Updating "$(basename "$dir")"
         cd "$dir" || exit
         git checkout master
         git fetch upstream
@@ -87,15 +89,15 @@ update()
     done
     echo Done!
     echo Updating Main Repository...
-    cd "$ROOTDIR" || exit
     cd "$PIHOLE" || exit
     git pull main
     echo Done!
     echo Collecting external large lists
-    cd List || exit
+    cd "$PIHOLE"/Lists || exit
     curl -L https://nsfw.oisd.nl -o nfsw.txt
     curl -L https://big.oisd.nl -o big.txt
     curl -L https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-social/hosts -o stock.txt
+    echo Done!
 }
 
 while getopts ":uhgc:" o; do

@@ -20,8 +20,3 @@ tiktok.txt
 torrent.txt
 tracking.txt
 vaping.txt
-nfsw.txt
-big.txt
-stock.txt
-crowed_list.txt
-youtubelist.txt
