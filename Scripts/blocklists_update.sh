@@ -58,27 +58,39 @@ create ()
     combined
 }
 
+# Make one loop and fix wrong directory changes
 update()
 {
     echo "$ROOTDIR"
     cd "$ROOTDIR" || exit
     for dir in "${DIRECTORIES[@]}";
     do 
-        if [ -d "$dir" ]; then
-            echo "$dir exists, not cloning"
-        else
-            name=${dir##*/}
-            git clone "git@github.com:ITMetacentric/$name.git"
-            wait
+        if git rev-parse --git-dir > /dev/null 2>&1; then
+            echo Git repository exists.
+            path=$(git rev-parse --show-toplevel)
+            if [ "$path" = "$dir" ]; then
+                echo Correct Repository found, moving on
+            else
+                echo Not Found. Cloning correct directory
+                name="$(basename "$dir")"
+                git clone "git@github.com:ITMetacentric/$name.git"
+                wait
+                cd "$name" || exit
+                if [ "$name" = 'List' ]; then
+                    git remote add upstream https://github.com/blocklistproject/Lists.git
+                    git checkout master
+                    git fetch upstream
+                    git merge upstream/master
+                else
+                    if [ "$name" = 'youTube_ads_4_pi-hole' ]; then
+                        git remote add upstream https://github.com/blocklistproject/Lists.git
+                        git checkout master
+                        git fetch upstream
+                        git merge upstream/master
+                    fi
+                fi
+            fi
         fi
-    done
-    for i in "${!UPSTREAM_DIRS[@]}"; do
-        cd "${UPSTREAM_DIRS[$i]}" || exit
-        git remote add upsteam "${UPSTREAMS[$i]}"
-        git checkout master
-        git fetch upstream
-        git merge upstream/master
-        cd .. || exit
     done
     echo collecting external large lists
     cd "$LIST" || exit
