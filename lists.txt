@@ -5,3 +5,5 @@ https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup
 https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-03.txt
 https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-04.txt
 https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-05.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-06.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-07.txt
