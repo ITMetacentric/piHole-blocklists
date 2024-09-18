@@ -19,42 +19,43 @@ help()
     echo "h     Print this Help."
     echo "u     Clone and/or update the forks"
     echo "c     Create the unified lists, takes file for lists as argument"
-    echo "a     Complete u then c"
+    echo "a     use all lists in various repositories"
     echo 
 }
 
-create( )
+combined ()
 {
-    if [ -z "$1" ]; then
-        echo no agruments passed, adding all lists
-        cp -r $LIST $PIHOLE
+    echo combinding files and spliting into deduplicated file...
+    cd "$PIHOLE/Lists" || exit
+    find . -name "*.txt" -type f -print0 | xargs -0 -n 1 -P 4 sed -i -e '$a\'
+    wait
+    find . -name '*.txt' ! -name 'temp.txt' -exec cat {} +  >> temp.txt
+    wait
+    cd "$PIHOLE/bin" || exit
+    split -dl 400000 --additional-suffix=.txt "$PIHOLE/Lists/temp.txt" dedup-
+    wait
+    cd "$PIHOLE/Lists" || exit
+    echo removing temp file
+    rm temp.txt
+}
+
+create ()
+{
+    filename=$1
+    echo Reading files...
+    while IFS= read -r line; do
+        files+=("$line")
+    done < "$filename"
+    echo Copying files...
+    cp "$YOUTUBE/youtube.txt" "$PIHOLE/Lists"
+    for file in "${files[@]}";
+    do
+        src="$LIST/$file"
+        echo "$src"
+        cp "$LIST/$file" "$PIHOLE/Lists"
         wait
-        cp "$YOUTUBE/youtube.txt" "$PIHOLE/Lists"
-        wait
-    else
-        echo reading files...
-        while IFS= read -r line; do
-            files+=$line
-        done < "$1"
-        echo copying files...
-        for file in "${files[@]}";
-        do
-            cp "$YOUTUBE/youtube.txt" "$PIHOLE/Lists"
-            cp "$LIST/$file" "$PIHOLE/Lists"
-        done
-        echo combinding files and spliting into deduplicated file...
-        cd "$PIHOLE/Lists" || exit
-        find . -name "*.txt" -type f -print0 | xargs -0 -n 1 -P 4 sed -i -e '$a\'
-        wait
-        echo *.txt | xargs -P 4 cat > temp.txt
-        wait
-        cd "$PIHOLE/bin" || exit
-        split -l 400000 "$PIHOLE/Lists/temp.txt" dedup
-        wait
-        cd "$PIHOLE/Lists" || exit
-        echo removing temp file
-        rm temp.txt
-    fi
+    done
+    combined
 }
 
 update()
@@ -73,32 +74,35 @@ update()
     for i in "${!UPSTREAM_DIRS[@]}"; do
         cd "${UPSTREAM_DIRS[$i]}" || exit
         git remote add upsteam "${UPSTREAMS[$i]}"
-        wait
         git checkout master
-        wait
         git fetch upstream
-        wait
         git merge upstream/master
-        wait 
         cd .. || exit
     done
     echo collecting external large lists
     cd "$LIST" || exit
     curl -L https://nsfw.oisd.nl -o nfsw.txt
-    wait
     curl -L https://big.oisd.nl -o big.txt
-    wait
 }
 
 all()
 {
-    update
-    wait
-    create "$1"
+    echo Adding all lists...
+    cp -r $LIST $PIHOLE
+    cp "$YOUTUBE/youtube.txt" "$PIHOLE/Lists"
+    cd $LIST || exit
+    rm -r .github
+    rm -r adguard
+    rm -r alpha
+    rm -r alt-versions
+    rm -r dmsmasq-version
+    rm -r img
+    rm -r scripts
+    combined
 }
 
-while getopts ":uhca:" option; do
-    case $option in
+while getopts ":u:h:c:a:" o; do
+    case "${o}" in
         h)
             help
             exit;;
@@ -106,11 +110,11 @@ while getopts ":uhca:" option; do
             update
             exit;;
         c)
-            create "$OPTARG"
+            create "${OPTARG}"
             exit;;
 
         a)
-            all "$OPTARG"
+            all
             exit;;
         \?)
             echo "Error: Invalid option"

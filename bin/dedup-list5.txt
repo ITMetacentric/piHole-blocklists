@@ -1,4 +1,0 @@
-0.0.0.0 r9.sn-cu-ajtee.googlevideo.com
-0.0.0.0 r9.sn-n4g-jqbe6.googlevideo.com
-0.0.0.0 r9.sn-n8v7kne7.googlevideo.com
-0.0.0.0 r9.sn-n8v7znsr.googlevideo.com
