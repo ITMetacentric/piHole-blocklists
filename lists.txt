@@ -1,7 +1,7 @@
 https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-social/hosts
-https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/bin/dedup-list0.txt
-https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/bin/dedup-list1.txt
-https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/bin/dedup-list2.txt
-https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/bin/dedup-list3.txt
-https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/bin/dedup-list4.txt
-https://raw.githubusercontent.com/ITMetacentric/piHole-blocklists/main/bin/dedup-list5.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-00.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-01.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-02.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-03.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-04.txt
+https://raw.githubusercontent.com/ITMetacentric/piHole_blocklists/main/bin/dedup-05.txt
