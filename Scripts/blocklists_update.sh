@@ -67,9 +67,9 @@ get()
     git remote add upstream https://github.com/blocklistproject/Lists.git
     cd "$ROOTDIR" || exit
     name="$(basename "$YOUTUBE")"
-    cd "$name" || exit
     git clone "git@github.com:ITMetacentric/$name.git"
     wait
+    cd "$name" || exit
     git remote add upstream https://github.com/kboghdady/youTube_ads_4_pi-hole.git
     cd "$ROOTDIR" || exit
 }
