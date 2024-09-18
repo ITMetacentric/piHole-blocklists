@@ -19,7 +19,6 @@ help()
     echo "h     Print this Help."
     echo "u     Clone and/or update the forks"
     echo "c     Create the unified lists, takes file for lists as argument"
-    echo "a     use all lists in various repositories"
     echo 
 }
 
@@ -84,25 +83,10 @@ update()
     cd "$LIST" || exit
     curl -L https://nsfw.oisd.nl -o nfsw.txt
     curl -L https://big.oisd.nl -o big.txt
+    curl -L https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-social/hosts -o stock.txt
 }
 
-all()
-{
-    echo Adding all lists...
-    cp -r $LIST $PIHOLE
-    cp "$YOUTUBE/youtube.txt" "$PIHOLE/Lists"
-    cd $LIST || exit
-    rm -r .github
-    rm -r adguard
-    rm -r alpha
-    rm -r alt-versions
-    rm -r dmsmasq-version
-    rm -r img
-    rm -r scripts
-    combined
-}
-
-while getopts ":uhc:a:" o; do
+while getopts ":uhc:" o; do
     case "${o}" in
         h)
             help
@@ -112,10 +96,6 @@ while getopts ":uhc:a:" o; do
             exit;;
         c)
             create "${OPTARG}"
-            exit;;
-
-        a)
-            all
             exit;;
         \?)
             echo "Error: Invalid option"
