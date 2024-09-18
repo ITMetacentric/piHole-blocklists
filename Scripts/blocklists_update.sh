@@ -102,7 +102,7 @@ all()
     combined
 }
 
-while getopts ":u:h:c:a:" o; do
+while getopts ":uhc:a:" o; do
     case "${o}" in
         h)
             help
