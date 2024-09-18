@@ -4,21 +4,19 @@ ROOTDIR=/home/isaac/blocklists
 PIHOLE=$ROOTDIR/piHole_blocklist
 LIST=/home/isaac/blocklists/Lists
 YOUTUBE=/home/isaac/blocklists/youTube_ads_4_pi-hole
-
-UPSTREAMS=("https://github.com/blocklistproject/Lists.git" "https://github.com/kboghdady/youTube_ads_4_pi-hole.git")
-UPSTREAM_DIRS=("$LIST" "$YOUTUBE")
-DIRECTORIES=("$PIHOLE" "$LIST" "$YOUTUBE")
+DIRECTORIES=("$LIST" "$YOUTUBE")
 
 help()
 {
     echo "A bash script to create the pihole blocklists"
     echo
-    echo "Syntax: scriptTemplate [-u|h|c|A]"
+    echo "Syntax: scriptTemplate [-u|h|c|g]"
     echo "options:"
     echo
     echo "h     Print this Help."
     echo "u     Clone and/or update the forks"
     echo "c     Create the unified lists, takes file for lists as argument"
+    echo "g     Get the required repositories for the first time"
     echo 
 }
 
@@ -58,51 +56,55 @@ create ()
     combined
 }
 
-# Make one loop and fix wrong directory changes
+get()
+{
+    echo Retiriving the required repositories
+    cd "$ROOTDIR" || exit
+    name="$(basename "$LIST")"
+    git clone "git@github.com:ITMetacentric/$name.git"
+    wait
+    cd "$name" || exit
+    git remote add upstream https://github.com/blocklistproject/Lists.git
+    cd "$ROOTDIR" || exit
+    name="$(basename "$YOUTUBE")"
+    cd "$name" || exit
+    git clone "git@github.com:ITMetacentric/$name.git"
+    wait
+    git remote add upstream https://github.com/kboghdady/youTube_ads_4_pi-hole.git
+    cd "$ROOTDIR" || exit
+}
+
 update()
 {
-    echo "$ROOTDIR"
+    echo Updating from Remote Forks...
     cd "$ROOTDIR" || exit
     for dir in "${DIRECTORIES[@]}";
     do 
-        if git rev-parse --git-dir > /dev/null 2>&1; then
-            echo Git repository exists.
-            path=$(git rev-parse --show-toplevel)
-            if [ "$path" = "$dir" ]; then
-                echo Correct Repository found, moving on
-            else
-                echo Not Found. Cloning correct directory
-                name="$(basename "$dir")"
-                git clone "git@github.com:ITMetacentric/$name.git"
-                wait
-                cd "$name" || exit
-                if [ "$name" = 'List' ]; then
-                    git remote add upstream https://github.com/blocklistproject/Lists.git
-                    git checkout master
-                    git fetch upstream
-                    git merge upstream/master
-                else
-                    if [ "$name" = 'youTube_ads_4_pi-hole' ]; then
-                        git remote add upstream https://github.com/blocklistproject/Lists.git
-                        git checkout master
-                        git fetch upstream
-                        git merge upstream/master
-                    fi
-                fi
-            fi
-        fi
+        cd "$dir" || exit
+        git checkout master
+        git fetch upstream
+        git merge upstream/master
     done
-    echo collecting external large lists
-    cd "$LIST" || exit
+    echo Done!
+    echo Updating Main Repository...
+    cd "$ROOTDIR" || exit
+    cd "$PIHOLE" || exit
+    git pull main
+    echo Done!
+    echo Collecting external large lists
+    cd List || exit
     curl -L https://nsfw.oisd.nl -o nfsw.txt
     curl -L https://big.oisd.nl -o big.txt
     curl -L https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-social/hosts -o stock.txt
 }
 
-while getopts ":uhc:" o; do
+while getopts ":uhgc:" o; do
     case "${o}" in
         h)
             help
+            exit;;
+        g)
+            get
             exit;;
         u)
             update
