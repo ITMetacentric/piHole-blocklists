@@ -60,15 +60,16 @@ create ()
 
 update()
 {
+    echo "$ROOTDIR"
     cd "$ROOTDIR" || exit
     for dir in "${DIRECTORIES[@]}";
     do 
-        if [ ! -d "$dir" ]; then
+        if [ -d "$dir" ]; then
+            echo "$dir exists, not cloning"
+        else
             name=${dir##*/}
             git clone "git@github.com:ITMetacentric/$name.git"
             wait
-        else
-            echo "$dir exists, not cloning"
         fi
     done
     for i in "${!UPSTREAM_DIRS[@]}"; do
