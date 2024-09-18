@@ -52,6 +52,6 @@ def main(root_dir, blocklist):
         num = files.index(i)
         # print(len(i))
         # print(type(i))
-        print(f"Writing out dedup-list-{num}.txt")
-        with open(os.path.join(root_dir, "bin", f'dedup-list{num}.txt'), 'w') as f:
+        print(f"Writing out dedup-list-{num:02}.txt")
+        with open(os.path.join(root_dir, "bin", f'dedup-{num:02}.txt'), 'w') as f:
             f.writelines(i)

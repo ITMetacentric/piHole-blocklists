@@ -1,4 +1,5 @@
 import os
+import getpass
 
 # WARNING!: Don't change these. These are the project dependent paths which ensure that the scripts reach the correct directories. 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,8 +21,8 @@ BLOCK_LIST_PATH = os.path.join(ROOT_DIR, 'Lists', 'blocklists')
 # echo Maps to path: %ABS_PATH%
 
 FORKS = {
-    'Lists': '/home/isaac/blocklists/Lists',
-    'youtube': '/home/isaac/blocklists/youTube_ads_4_pi-hole'
+    'Lists': f'/home/{getpass.getuser()}/blocklists/Lists',
+    'youtube': f'/home/{getpass.getuser()}/blocklists/youTube_ads_4_pi-hole'
 }
 
 # Change these to what you want to include
