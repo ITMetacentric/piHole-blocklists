@@ -20,4 +20,3 @@ tiktok.txt
 torrent.txt
 tracking.txt
 vaping.txt
-youtube.txt

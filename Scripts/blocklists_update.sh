@@ -47,7 +47,8 @@ create ()
         files+=("$line")
     done < "$filename"
     echo Copying files...
-    cp "$YOUTUBE/youtube.txt" "$PIHOLE/Lists"
+    cp "$YOUTUBE/youtubelist.txt" "$PIHOLE/Lists"
+    cp "$YOUTUBE/crowed_list.txt" "$PIHOLE/Lists"
     for file in "${files[@]}";
     do
         src="$LIST/$file"
