@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ROOTDIR=/home/isaac/blocklists
-PIHOLE=$ROOTDIR/piHole
+PIHOLE=$ROOTDIR/piHole_blocklist
 LIST=/home/isaac/blocklists/Lists
 YOUTUBE=/home/isaac/blocklists/youTube_ads_4_pi-hole
 
