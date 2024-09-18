@@ -65,7 +65,7 @@ update()
     do 
         if [ ! -d "$dir" ]; then
             name=${dir##*/}
-            git clone "https://github.com/ITMetacentric/$name.git"
+            git clone "git@github.com:ITMetacentric/$name.git"
             wait
         else
             echo "$dir exists, not cloning"
